@@ -1,13 +1,13 @@
 import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import '@ag-grid-community/styles/ag-grid.css';
-import '@ag-grid-community/styles/ag-theme-alpine.css';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 const CountryList = ({ countries, onRowClick }) => {
   const columns = [
     { headerName: 'Name', field: 'name.common' },
-    { headerName: 'Languages', field: 'languages'},
-    { headerName: 'Currency', field: 'currencies' },
+    { headerName: 'Languages', field: 'languages', valueGetter: (params) => params.data.languages ? Object.values(params.data.languages).join(', ') : 'N/A' },
+    { headerName: 'Currency', field: 'currencies',  valueGetter: (params) => params.data.currencies ? Object.values(params.data.currencies).map(currency => currency.name).join(', ') : 'N/A' },
     { headerName: 'Population', field: 'population' },
   ];
 

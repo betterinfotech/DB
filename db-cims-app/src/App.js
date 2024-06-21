@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
+import { FavoritesProvider } from './FavoritesContext';
+import CountryList from './components/CountryList';
+import SearchBar from './components/SearchBar';
+import Favorites from './components/Favorites';
+import CountryDetail from './components/CountryDetail';
 import db_logo from './db_logo.jpg';
+import logo from './logo.svg';
 import './App.css';
-import CountryList from './components/CountryList.js';
 
 const App = () => {
-
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -20,23 +23,44 @@ const App = () => {
       .catch(error => console.error('Error fetching countries:', error));
   }, []);
 
+  const handleSearch = (term) => {
+    const lowercasedTerm = term.toLowerCase();
+    const filtered = countries.filter(country =>
+      country.name.common.toLowerCase().includes(lowercasedTerm) ||
+      (country.languages && Object.values(country.languages).some(language => language.toLowerCase().includes(lowercasedTerm))) ||
+      (country.currencies && Object.values(country.currencies).some(currency => currency.name.toLowerCase().includes(lowercasedTerm)))
+    );
+    setFilteredCountries(filtered);
+  };
+
   const handleRowClick = (country) => {
     setSelectedCountry(country);
   };
 
   return (
-    <div className="App">
-      <table>
-        <tr>
-          <th><img src={db_logo} alt="dblogo" width="230" height="140" /></th>
-          <th><h1>CIMS - Country Information Management System</h1></th>
-          <th><img src={logo} className="App-logo" alt="logo" width="80" height="80" /></th>
-        </tr>
-      </table>
-      <div style={{ flex: 1 }}>
-        <CountryList countries={filteredCountries} onRowClick={handleRowClick} />
+    <FavoritesProvider>
+      <div>
+        <img src={db_logo} alt="dblogo" width="130" height="80" />
+        <h1>CIMS - Country Information Management System</h1>
+
+        <SearchBar onSearch={handleSearch} />
+        <div style={{ display: 'flex' }}>
+          <div style={{ flex: 1 }}>
+            <CountryList countries={filteredCountries} onRowClick={handleRowClick} />
+          </div>
+
+          <div style={{ flex: 1 }}>
+            {selectedCountry && <CountryDetail country={selectedCountry} />}
+          </div>
+        </div>
+
+        <Favorites />
       </div>
-    </div>
+
+      <img src={logo} className="App-logo" alt="logo" width="80" height="80" />
+
+    </FavoritesProvider>
+
   );
 };
 
