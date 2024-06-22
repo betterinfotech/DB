@@ -1,3 +1,9 @@
+/*
+History
+Date        Who          WHAT
+21-JUN-2024 Shane Wilson Intial version
+22-JUN-2024 Shane Wilson Removed repeated information from drill down.
+*/
 import React, { useContext } from 'react';
 import FavoritesContext from '../FavoritesContext';
 
@@ -9,9 +15,11 @@ const CountryDetail = ({ country }) => {
     <div>
       <h2>{country.name.common}</h2>
       <img src={country.flags.png} alt="flag" style={{ width: '100px' }} />
-      <p>Population: {country.population}</p>
+      <p>Capital: {country.capital}</p>
       <p>Region: {country.region}</p>
-      <p>Languages: {country.languages ? Object.values(country.languages).join(', ') : 'N/A'}</p>
+      <p>Continent: {country.continents}</p>
+      <p>Area (km2): {country.area}</p>
+      <p>TMZ: {country.timezones}</p>
       <p>Currencies: {country.currencies ? Object.values(country.currencies).map(currency => currency.name).join(', ') : 'N/A'}</p>
       <button onClick={() => isFavorite ? removeFavorite(country) : addFavorite(country)}>
         {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}

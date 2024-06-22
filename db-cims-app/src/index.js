@@ -1,3 +1,19 @@
+/*
+-------------------------------------------
+CIMS - Country Information Management System
+-------------------------------------------
+About:
+A React application to retrieve country information.
+A basic search faciity is provided.  Users can click
+a country for details and store that country in their 
+favourites.
+
+History
+Date        Who          WHAT
+----------- ------------ ------------------
+21-JUN-2024 Shane Wilson Intial version
+*/
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
