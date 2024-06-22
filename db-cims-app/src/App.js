@@ -1,3 +1,9 @@
+/*
+History
+Date        Who          WHAT
+21-JUN-2024 Shane Wilson Intial version
+*/
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FavoritesProvider } from './FavoritesContext';
@@ -23,6 +29,7 @@ const App = () => {
       .catch(error => console.error('Error fetching countries:', error));
   }, []);
 
+  // Allow to search on country name, lanaguage or currency.
   const handleSearch = (term) => {
     const lowercasedTerm = term.toLowerCase();
     const filtered = countries.filter(country =>

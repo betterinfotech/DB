@@ -1,3 +1,9 @@
+/*
+History
+Date        Who          WHAT
+21-JUN-2024 Shane Wilson Intial version
+*/
+
 const FAVORITES_KEY = 'favorites';
 
 export const loadFavorites = () => {
